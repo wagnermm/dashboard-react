@@ -1,38 +1,115 @@
-.App {
-  text-align: center;
+.header {
+  width: 100%;
+  height: 80px;
+  padding: 2rem;
+  background-color: #282c34;
+  border-bottom: 1px solid #61dafb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-.App-logo {
-  height: 40vmin;
+.logo {
+  height: 4rem;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .logo {
+      animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nav {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
-
-.App-link {
-  color: #61dafb;
+ul {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
 }
-
+li {
+  list-style: none;
+  font-size: 1.4rem;
+  color: #fff;
+  transition: 0.4s ease-in-out;
+}
+li:hover {
+  text-shadow: 1px 1px #fff;
+}
+.nav-mobile, .btn-mobile {
+  display: none;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media(max-width: 665px) {
+  .nav {
+      display: none;
+  }
+  .nav-mobile, .btn-mobile {
+      display: block;
+  }
+  .btn-mobile div{
+      width: 2rem;
+      height: 0.3rem;
+      margin: 0.3rem;
+      background: #fff;
+      transition: 0.4s ease-in;
+  }
+  .nav-mobile {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 70vw;
+      height: 100vh;
+      background: #fff;
+      transform: translateX(100%);
+      transition: 0.5s ease-in;
+      z-index: 2;
+  }
+  .nav-mobile ul {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2rem;
+  }
+  .nav-mobile li {
+      list-style: none;
+      text-align: center;
+      margin-bottom: 4rem;
+  }
+  .nav-mobile a {
+      font-size: 2.3rem;
+      text-decoration: none;
+      color: #282c34;
+      font-weight: 700;
+  }
+  .nav-active {
+      transform: translateX(0);
+  }
+  .toggle .line1 {
+      transform: rotate(-45deg) translate(-4px, 5px);
+  }
+  .toggle .line2 {
+      opacity: 0;
+  }
+  .toggle .line3 {
+      transform: rotate(45deg) translate(-4px, -5px);
+  }
+  .close-menu {
+      width: 100%;
+      padding: 1rem;
+      color: #282c34;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      font-size: 4rem;
   }
 }
