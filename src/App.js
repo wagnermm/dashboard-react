@@ -1,51 +1,56 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Link, Route } from 'react-router-dom';
-import MainDashboard from './Dashboards/MainDashboard';
-import './App.css';
+import React, { Suspense, useEffect } from 'react'
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-function App() {
-  const [active, setActive] = useState("nav-mobile");
-  const [toggleIcon, setToggleIcon] = useState("btn-mobile");
+import { CSpinner, useColorModes } from '@coreui/react'
+import './scss/style.scss'
 
-  const navToggle = ()=> {
-    active === 'nav-mobile' ? setActive('nav-mobile nav-active') : setActive('nav-mobile');
-    toggleIcon === 'btn-mobile' ? setToggleIcon('btn-mobile toggle') : setToggleIcon('btn-mobile');
-  };
-  const [close, setClose] = useState("close-menu");
-  const closeMenu=()=> {
-    close === "menu-close" ? setClose('menu-close nav__active') : setClose("menu-close");
-    active === 'nav-mobile' ? setActive('nav-mobile nav-active') : setActive('nav-mobile');
-    toggleIcon === 'btn-mobile' ? setToggleIcon('btn-mobile toggle') : setToggleIcon('btn-mobile');
-  }
+// Containers
+const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+
+// Pages
+const Login = React.lazy(() => import('./views/pages/login/Login'))
+const Register = React.lazy(() => import('./views/pages/register/Register'))
+const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
+const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
+
+const App = () => {
+  const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
+  const storedTheme = useSelector((state) => state.theme)
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.href.split('?')[1])
+    const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]
+    if (theme) {
+      setColorMode(theme)
+    }
+
+    if (isColorModeSet()) {
+      return
+    }
+
+    setColorMode(storedTheme)
+  }, [])
+
   return (
-    <div className="App">
-      <BrowserRouter>
-        <header className='header'>
-          <nav className='nav'>
-            <ul>
-              <li><Link to="/"></Link></li>
-              <li><Link to="/main-dashboard">Dashboard</Link></li>
-            </ul>
-          </nav>
-          <div onClick={navToggle} className={toggleIcon}>
-                <div className='line1'></div>
-                <div className='line2'></div>
-                <div className='line3'></div>
-            </div>
-            <nav className={active}>
-                <div onClick={closeMenu} className="close-menu">X</div>
-              <ul className={close}>
-                <li><Link to="/"></Link></li>
-                <li><Link to="/main-dashboard">Dashboard</Link></li>
-            </ul>
-            </nav>
-        </header>
+    <HashRouter>
+      <Suspense
+        fallback={
+          <div className="pt-3 text-center">
+            <CSpinner color="primary" variant="grow" />
+          </div>
+        }
+      >
         <Routes>
-          <Route path='/main-dashboard' element={<MainDashboard/>}></Route>
+          <Route exact path="/login" name="Login Page" element={<Login />} />
+          <Route exact path="/register" name="Register Page" element={<Register />} />
+          <Route exact path="/404" name="Page 404" element={<Page404 />} />
+          <Route exact path="/500" name="Page 500" element={<Page500 />} />
+          <Route path="*" name="Home" element={<DefaultLayout />} />
         </Routes>
-      </BrowserRouter>
-    </div>
-  );
+      </Suspense>
+    </HashRouter>
+  )
 }
 
-export default App;
+export default App
