@@ -1,1 +1,1 @@
-# Dashboard adm - React.js
+# Dashboard - React.js
