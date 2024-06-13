@@ -4,13 +4,6 @@
   "version": "5.0.0",
   "description": "CoreUI Free React Admin Template",
   "homepage": "https://wagnermm.github.io/dashboard-react/",
-  "bugs": {
-    "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
-  },
   "license": "MIT",
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
@@ -19,7 +12,9 @@
     "serve": "vite preview",
     "start": "vite",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@coreui/chartjs": "^4.0.0",
